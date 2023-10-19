@@ -2,38 +2,27 @@ package utils
 
 import (
 	"context"
-	"fmt"
+	"os"
+	"time"
 
 	"github.com/cloudinary/cloudinary-go/v2"
-	"github.com/cloudinary/cloudinary-go/v2/api"
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 )
 
-func credentials() (*cloudinary.Cloudinary, context.Context) {
-	// Add your Cloudinary credentials, set configuration parameter
-	// Secure=true to return "https" URLs, and create a context
-	//===================
-	cld, _ := cloudinary.New()
-	cld.Config.URL.Secure = true
-	ctx := context.Background()
-	return cld, ctx
-}
-func UploadImage(cld *cloudinary.Cloudinary, ctx context.Context, filePath string) (string, error) {
+func ImageUploadHelper(input interface{}) (string, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 
-	// Upload the image.
-	// Set the asset's public ID and allow overwriting the asset with new versions
-	resp, err := cld.Upload.Upload(ctx, filePath, uploader.UploadParams{
-		PublicID:       "go_file",
-		UniqueFilename: api.Bool(false),
-		Overwrite:      api.Bool(true),
-	})
-
+	//create cloudinary instance
+	cld, err := cloudinary.NewFromParams(os.Getenv("CLOUD_NAME"), os.Getenv("API_KEY"), os.Getenv("API_SECRET"))
 	if err != nil {
-		fmt.Println("error")
 		return "", err
 	}
 
-	// // Log the delivery URL
-	// fmt.Println("****2. Upload an image****\nDelivery URL:", resp.SecureURL, "\n")
-	return resp.SecureURL, nil
+	//upload file
+	uploadParam, err := cld.Upload.Upload(ctx, input, uploader.UploadParams{Folder: os.Getenv("UPLOAD_FOLDER")})
+	if err != nil {
+		return "", err
+	}
+	return uploadParam.SecureURL, nil
 }

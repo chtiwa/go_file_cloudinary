@@ -4,7 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/chtiwa/go_file/initializers"
+	"github.com/chtiwa/go_file_cloudinary/controllers"
+	"github.com/chtiwa/go_file_cloudinary/initializers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,7 +27,7 @@ func main() {
 
 	r.POST("/", func(c *gin.Context) {
 		// single file
-		file, err := c.FormFile("image")
+		file, err := c.FormFile("file")
 		log.Println(file.Filename)
 
 		if err != nil {
@@ -49,19 +50,8 @@ func main() {
 		})
 	})
 
-	c.POST("/cloudinary", func(c *gin.Context) {
-		file, err := c.FormFile("image")
-		if err != nil {
-			c.HTML(http.StatusOK, "index.html", gin.H{
-				"error": "Failed to upload image",
-			})
-		}
-
-		c.HTML(http.StatusOK, "index.html", gin.H{
-			"image": "",
-		})
-
-	})
+	r.POST("/cloudinary/file-upload", controllers.FileUpload())
+	// r.POST("/cloudinary/remote-upload", controllers.RemoteUpload())
 
 	r.Run()
 }
