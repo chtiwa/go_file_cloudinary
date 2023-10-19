@@ -1,0 +1,101 @@
+# Compiled Object files, Static and Dynamic libraries (Shared Objects)
+*.o
+*.a
+*.so
+
+# Output of the go install command
+/bin/
+/pkg/
+/test/
+# Previous versions of the compiled binary
+/_obj/
+/_test/
+/_testmain.go
+
+# Output of the go get command
+/src/
+
+# Dependency directories (Glide, Godep, Vgo, Dep, etc)
+/vendor/
+/Godeps/
+/.glide/
+/.godep/
+/.vgo/
+
+# Output of `go tool cover`
+*.out
+
+# Output of `go tool trace`
+trace.out
+
+# Output of `go tool pprof`
+*.pprof
+
+# Output of `go test -c`
+*.test
+
+# Output of `go tool cgo`
+_pie/
+
+# Compiled Output
+*.exe
+*.test
+*.prof
+
+# Compiled Go binary
+main
+
+# End of Visual Studio Code project files
+.vscode/
+
+# End of GoLand project files
+.idea/
+
+# JetBrains
+# .idea/
+
+# Sublime Text files
+.sublime-workspace
+.sublime-project
+
+# macOS
+.DS_Store
+
+# vim swap files
+*.swp
+
+# Binary files
+*.dll
+*.so
+*.dylib
+
+# Log files
+*.log
+
+# Environment variables file
+.env
+
+# API key files
+*.key
+
+# Webpack build files
+/dist/
+
+# Node modules
+/node_modules/
+
+# The file to store your application configuration
+config.yaml
+config.toml
+
+# Generated file
+swagger.json
+
+# Visual Studio Code settings
+.vscode/
+
+# GoLand settings
+.idea/
+
+# Compiled binary
+bin/
